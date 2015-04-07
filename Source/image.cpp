@@ -53,6 +53,9 @@ void Image::AddNoise (double factor)
 void Image::Brighten (double factor)
 {
   /* Your Work Here  (section 3.2.1 of assignment)*/
+	for (int i = 0; i < num_pixels; i++){
+		pixels[i].SetClamp(pixels[i].r*factor, pixels[i].g*factor, pixels[i].b*factor);
+	}
 }
 
 
