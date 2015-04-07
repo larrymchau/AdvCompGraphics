@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <float.h>
-
+#include <iostream>
 
 /**
  * Image
@@ -69,13 +69,41 @@ void Image::ChangeSaturation(double factor)
 
 void Image::ChangeGamma(double factor)
 {
-  /* Your Work Here (section 3.2.4) */
+	/* Your Work Here (section 3.2.4) */
+	double red, green, blue;
+	for (int i = 0; i < num_pixels; i++){
+		red = pow((double)(pixels[i].r/255.0), ((double)1.0) / factor)*255;
+		green = pow((double)(pixels[i].g/255.0), ((double)1.0) / factor)*255;
+		blue = pow((double)(pixels[i].b/255.0), ((double)1.0) / factor)*255;
+		this->pixels[i].SetClamp(red,green,blue);
+    }
 }
 
 Image* Image::Crop(int x, int y, int w, int h)
 {
   /* Your Work Here (section 3.2.5) */
-  return NULL ;
+	if (x + w > width || y + w > height){
+		std::cerr << "Out of Bounds" << std::endl;
+		return NULL;
+	}
+	if (x < 0 || y < 0 || w < 0 || h < 0) {
+		std::cerr << "Invalid Parameters" << std::endl;
+		return NULL;
+	}
+	Image* img = new Image(w, h);
+	Pixel* croppedImage = img->pixels;
+	int cIdx = 0;
+	/* row major */
+	int Idx = y*(width) + x;
+	for (int i = 0; i < h; i = i ++){
+		for (int j = 0; j < w; j++){
+			croppedImage[cIdx] = pixels[Idx + j];
+			cIdx++;
+		}
+		Idx += width;
+	}
+
+	return img;
 }
 
 /*

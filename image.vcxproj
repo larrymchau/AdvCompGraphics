@@ -45,6 +45,7 @@
     <IntDir>.\Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)Includes\;$(IncludePath)</IncludePath>
+    <ExecutablePath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Release\</OutDir>
