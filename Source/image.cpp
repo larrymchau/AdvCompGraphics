@@ -50,24 +50,42 @@ void Image::AddNoise (double factor)
 }
 */
 
-void Image::Brighten (double factor)
+void Image::Brighten(double factor)
 {
-  /* Your Work Here  (section 3.2.1 of assignment)*/
+	/* Your Work Here  (section 3.2.1 of assignment)*/
+	if (factor < 0){
+		factor = 0.0;
+	}
 	for (int i = 0; i < num_pixels; i++){
-		pixels[i].SetClamp(pixels[i].r*factor, pixels[i].g*factor, pixels[i].b*factor);
+		pixels[i].SetClamp(pixels[i].r * factor, pixels[i].g * factor, pixels[i].b * factor);
 	}
 }
 
 
-void Image::ChangeContrast (double factor)
+void Image::ChangeContrast(double factor)
 {
-  /* Your Work Here (section 3.2.2) */
+	/* Your Work Here (section 3.2.2) */
+	double avg = 0.0;
+	for (int i = 0; i < num_pixels; i++){
+		avg += pixels[i].Luminance();
+	}
+	avg /= num_pixels;
+	Pixel grey;
+	grey.SetClamp(avg, avg, avg);
+	for (int i = 0; i < num_pixels; i++){
+		pixels[i] = PixelLerp(grey, pixels[i], factor);
+	}
 }
 
 
 void Image::ChangeSaturation(double factor)
 {
-  /* Your Work Here (section 3.2.3) */
+	/* Your Work Here (section 3.2.3) */
+	for (int i = 0; i < num_pixels; i++){
+		double greyVal = pixels[i].Luminance();
+		Pixel grey; grey.SetClamp(greyVal, greyVal, greyVal);
+		pixels[i] = PixelLerp(grey, pixels[i], factor);
+	}
 }
 
 void Image::ChangeGamma(double factor)
