@@ -5,6 +5,7 @@
 #include <string.h>
 #include <float.h>
 #include <iostream>
+#include <time.h>
 
 /**
  * Image
@@ -93,9 +94,12 @@ void Image::ChangeGamma(double factor)
 	/* Your Work Here (section 3.2.4) */
 	double red, green, blue;
 	for (int i = 0; i < num_pixels; i++){
-		red = pow((double)(pixels[i].r/255.0), ((double)1.0) / factor)*255;
-		green = pow((double)(pixels[i].g/255.0), ((double)1.0) / factor)*255;
-		blue = pow((double)(pixels[i].b/255.0), ((double)1.0) / factor)*255;
+		//convert pixel [0-255] to [0-1] -> Cold
+		//then do Cnew = Cold^(1/y) and then multiply by 255 again to get
+		//[0-255] domain
+		red = pow((double)(pixels[i].r/255.0), ((double)1.0) / factor)*255.0;
+		green = pow((double)(pixels[i].g/255.0), ((double)1.0) / factor)*255.0;
+		blue = pow((double)(pixels[i].b/255.0), ((double)1.0) / factor)*255.0;
 		this->pixels[i].SetClamp(red,green,blue);
     }
 }
@@ -114,8 +118,9 @@ Image* Image::Crop(int x, int y, int w, int h)
 	Image* img = new Image(w, h);
 	Pixel* croppedImage = img->pixels;
 	int cIdx = 0;
+	//start position
+	int Idx = y*(width)+x;
 	/* row major */
-	int Idx = y*(width) + x;
 	for (int i = 0; i < h; i = i ++){
 		for (int j = 0; j < w; j++){
 			croppedImage[cIdx] = pixels[Idx + j];
@@ -138,12 +143,32 @@ void Image::ExtractChannel(int channel)
 void Image::Quantize (int nbits)
 {
   /* Your Work Here (Section 3.3.1) */
+	double red, green, blue;
+	for (int i = 0; i < num_pixels; i++) {
+		double factor = pow(2, nbits);
+		//cf = floor(255*floor(p*b)/(b-1))
+		red = floor(255.0*floor(pixels[i].r*factor / 256.0) / (factor - 1));
+		green = floor(255.0*floor(pixels[i].g*factor / 256.0) / (factor - 1));
+		blue = floor(255.0*floor(pixels[i].b*factor / 256.0) / (factor - 1));
+		pixels[i].SetClamp(red, green, blue);
+	}
 }
 
 
 void Image::RandomDither (int nbits)
 {
   /* Your Work Here (Section 3.3.2) */
+	srand(time(NULL));
+	double red, green, blue, random;
+	for (int i = 0; i < num_pixels; i++) {
+		double factor = pow(2, nbits);
+		//cf = floor(255*floor(p*b)/(b-1))
+		random = ((double)rand() / (double)RAND_MAX) - 0.5; //rand number -0.5-0.5
+		red = floor(255.0*floor((pixels[i].r*factor / 256.0) + random) / (factor - 1));
+		green = floor(255.0*floor((pixels[i].g*factor / 256.0) + random) / (factor - 1));
+		blue = floor(255.0*floor((pixels[i].b*factor / 256.0) + random) / (factor - 1));
+		pixels[i].SetClamp(red, green, blue);
+	}
 }
 
 
@@ -177,7 +202,37 @@ const double
 
 void Image::FloydSteinbergDither(int nbits)
 {
-  /* Your Work Here (Section 3.3.3) */
+	/* Your Work Here (Section 3.3.3) */
+
+	double red, green, blue;
+	for (int i = 0; i < num_pixels; i++) {
+		double factor = pow(2, nbits);
+		//cf = floor(255*floor(p*b)/(b-1))
+		red = floor(255.0*floor(pixels[i].r*factor / 256.0) / (factor - 1));
+		green = floor(255.0*floor(pixels[i].g*factor / 256.0) / (factor - 1));
+		blue = floor(255.0*floor(pixels[i].b*factor / 256.0) / (factor - 1));
+		if (i < num_pixels - 1){
+			pixels[i+1].r += (7.0 / 16.0) * (pixels[i].r - red);
+			pixels[i+1].g += (7.0 / 16.0) * (pixels[i].g - green);
+			pixels[i+1].b += (7.0 / 16.0) * (pixels[i].b - blue);
+		}
+		if (i < num_pixels - width){
+			pixels[i+width-1].r += (3.0 / 16.0) * (pixels[i].r - red);
+			pixels[i+width-1].g += (3.0 / 16.0) * (pixels[i].g - green);
+			pixels[i+width-1].b += (3.0 / 16.0) * (pixels[i].b - blue);
+
+			pixels[i+width].r += (5.0 / 16.0) * (pixels[i].r - red);
+			pixels[i+width].g += (5.0 / 16.0) * (pixels[i].g - green);
+			pixels[i+width].b += (5.0 / 16.0) * (pixels[i].b - blue);
+		}
+		if (i < num_pixels - width - 1){
+			pixels[i + width - 1].r += (1.0 / 16.0) * (pixels[i].r - red);
+			pixels[i + width - 1].g += (1.0 / 16.0) * (pixels[i].g - green);
+			pixels[i + width - 1].b += (1.0 / 16.0) * (pixels[i].b - blue);
+		}
+		pixels[i].SetClamp(red, green, blue);
+	}
+
 }
 
 void ImageComposite(Image *bottom, Image *top, Image *result)
