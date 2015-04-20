@@ -5,6 +5,7 @@
 #include <string.h>
 #include <float.h>
 #include <iostream>
+#include <time.h>
 
 /**
  * Image
@@ -137,13 +138,38 @@ void Image::ExtractChannel(int channel)
 
 void Image::Quantize (int nbits)
 {
+	double b = pow(2, nbits);
   /* Your Work Here (Section 3.3.1) */
+	for (int i = 0; i < num_pixels; i++){
+		double q = floor((pixels[i].r/255.0) * b);
+		int red = (int)floor(255 * q / (b - 1));
+		q = floor((pixels[i].g/255.0) * b);
+		int green = (int)floor(255 * q / (b - 1));
+		q = floor((pixels[i].b/255.0) * b);
+		int blue = (int)floor(255 * q / (b - 1));
+		pixels[i].SetClamp(red, green, blue);
+	}
 }
 
 
 void Image::RandomDither (int nbits)
 {
   /* Your Work Here (Section 3.3.2) */
+	double b = pow(2, nbits);
+	srand((unsigned)time(NULL));
+	/* Your Work Here (Section 3.3.1) */
+	for (int i = 0; i < num_pixels; i++){
+		double X = ((double)rand() / (double)RAND_MAX) - 0.5;
+		double q = floor((pixels[i].r / 255.0) * b + X);
+		int red = (int)floor(255 * q / (b - 1));
+		X = ((double)rand() / (double)RAND_MAX) - 0.5;
+		q = floor((pixels[i].g / 255.0) * b + X);
+		int green = (int)floor(255 * q / (b - 1));
+		X = ((double)rand() / (double)RAND_MAX) - 0.5;
+		q = floor((pixels[i].b / 255.0) * b + X);
+		int blue = (int)floor(255 * q / (b - 1));
+		pixels[i].SetClamp(red, green, blue);
+	}
 }
 
 
