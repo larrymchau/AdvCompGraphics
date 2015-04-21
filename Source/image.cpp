@@ -7,6 +7,8 @@
 #include <iostream>
 #include <time.h>
 
+
+#define M_PI 3.14159265358979323846
 /**
  * Image
  **/
@@ -260,16 +262,158 @@ void Image::Convolve(int *filter, int n, int normalization, int absval) {
 void Image::Blur(int n)
 {
   /* Your Work Here (Section 3.4.1) */
+	for (int i = 0; i < width; i++){
+		for (int j = 0; j < height; j++){
+			float r = 0; float g = 0; float b = 0;
+			float weightSum = 0;
+
+			for (int tempX = i - (n/2); tempX <= i + (n/2); tempX++){
+				for (int tempY = j - (n/2); tempY <= j + (n/2); tempY++){
+					if (tempX < 0 || tempX > width - 1){
+						continue;
+					}
+					if (tempY < 0 || tempY > height - 1){
+						continue;
+					}
+					float sigma = floorf(n / 2) / 2;
+					float weight = exp(-((tempX - i)*(tempX - i) + (tempY - j)*(tempY - j))/(2*sigma*sigma))/(2*M_PI*sigma*sigma);
+					//fprintf(stderr,"%d %d\n", tempX , tempY);
+					r += pixels[tempX*height + tempY].r * weight;
+					g += pixels[tempX*height + tempY].g * weight;
+					b += pixels[tempX*height + tempY].b * weight;
+					weightSum += weight;
+				}
+			}
+			r = (int)((r / weightSum) + 0.5);
+			g = (int)((g / weightSum) + 0.5);
+			b = (int)((b / weightSum) + 0.5);
+			pixels[i*height + j].SetClamp(r, g, b);
+		}
+	}
+
 }
 
 void Image::Sharpen() 
 {
+	//int normalizeFactor = 7;
+	//std::cout << "into sharpen" << std::endl;
+	//printf("%s\n", "into sharpen");
+	float* sharpenWeight = new float[9];
+	sharpenWeight[0] = -1/7.0f; sharpenWeight[1] = -2/7.0f; sharpenWeight[2] = -1/7.0f;
+	sharpenWeight[3] = -2/7.0f; sharpenWeight[4] = 19/7.0f; sharpenWeight[5] = -2/7.0f;
+	sharpenWeight[6] = -1/7.0f; sharpenWeight[7] = -2/7.0f; sharpenWeight[8] = -1/7.0f;
+	for (int i = 0; i < width; i++){
+		for (int j = 0; j < height; j++){
+			float r = 0; float g = 0; float b = 0;
+			float weightSum = 0;
+			int count = 0;
+			for (int tempX = i - 1; tempX <= i + 1; tempX++){
+				for (int tempY = j - 1; tempY <= j + 1; tempY++,count++){
+					if (tempX < 0 || tempX > width - 1){
+						continue;
+					}
+					if (tempY < 0 || tempY > height - 1){
+						continue;
+					}
+					float weight = sharpenWeight[count];
+					r += pixels[tempX*height + tempY].r * weight;
+					g += pixels[tempX*height + tempY].g * weight;
+					b += pixels[tempX*height + tempY].b * weight;
+					weightSum += weight;
+				}
+			}
+			r = (int)((r / weightSum) + 0.5);
+			g = (int)((g / weightSum) + 0.5);
+			b = (int)((b / weightSum) + 0.5);
+			pixels[i*height + j].SetClamp(r, g, b);
+		}
+	}
+
   /* Your Work Here (Section 3.4.2) */
 }
 
 void Image::EdgeDetect(int threshold)
 {
   /* Your Work Here (Section 3.4.3) */
+	//std::cout << "into edgedetect" << std::endl;
+	float* horizontalWeight = new float[9];
+	horizontalWeight[0] = -1; horizontalWeight[1] = 0; horizontalWeight[2] = 1;
+	horizontalWeight[3] = -2; horizontalWeight[4] = 0; horizontalWeight[5] = 2;
+	horizontalWeight[6] = -1; horizontalWeight[7] = 0; horizontalWeight[8] = 1;
+
+	float* verticalWeight = new float[9];
+	verticalWeight[0] = 1; verticalWeight[1] = 2; verticalWeight[2] = 1;
+	verticalWeight[3] = 0; verticalWeight[4] = 0; verticalWeight[5] = 0;
+	verticalWeight[6] = -1; verticalWeight[7] = -2; verticalWeight[8] = -1;
+
+	//Pixel *hPixels = new Pixel[num_pixels];
+	//Pixel *vPixels = new Pixel[num_pixels];
+	float *hPixelsr = new float[num_pixels];
+	float *hPixelsg = new float[num_pixels];
+	float *hPixelsb = new float[num_pixels];
+
+	float *vPixelsr = new float[num_pixels];
+	float *vPixelsg = new float[num_pixels];
+	float *vPixelsb = new float[num_pixels];
+
+	for (int i = 0; i < width; i++){
+		for (int j = 0; j < height; j++){
+			float hr = 0; float hg = 0; float hb = 0;
+			//float hweightSum = 0;
+			float vr = 0; float vg = 0; float vb = 0;
+			//float vweightSum = 0;
+			int count = 0;
+			//std::cout << "start loop for 1 pixel" << std::endl;
+			for (int tempY = j - 1; tempY <= j + 1; tempY++){
+				for (int tempX = i - 1; tempX <= i + 1; tempX++, count++){
+					if (tempX < 0 || tempX > width - 1){
+						continue;
+					}
+					if (tempY < 0 || tempY > height - 1){
+						continue;
+					}
+					float weight = horizontalWeight[count];
+					//fprintf(stderr, "horizontal count: %d : %.2f // tempX: %d , tempY: %d, x: %d, y: %d\n", count, weight,tempX,tempY,i,j);
+					hr += pixels[tempX*height + tempY].r * weight;
+					hg += pixels[tempX*height + tempY].g * weight;
+					hb += pixels[tempX*height + tempY].b * weight;
+					//hweightSum += weight;
+					
+					weight = verticalWeight[count];
+					//fprintf(stderr, "vertical count: %d : %.2f // tempX: %d , tempY: %d, x: %d, y: %d\n", count, weight, tempX, tempY, i, j);
+					vr += pixels[tempX*height + tempY].r * weight;
+					vg += pixels[tempX*height + tempY].g * weight;
+					vb += pixels[tempX*height + tempY].b * weight;
+					//vweightSum += weight;
+				}
+			}
+			
+			//std::cout << "end loop for 1 pixel" << std::endl;
+			hPixelsr[i*height + j] = (hr);// / hweightSum);
+			hPixelsg[i*height + j] = (hg);// / hweightSum);
+			hPixelsb[i*height + j] = (hb);// / hweightSum);
+			
+			vPixelsr[i*height + j] = (vr);// / vweightSum);
+			vPixelsg[i*height + j] = (vg);// / vweightSum);
+			vPixelsb[i*height + j] = (vb);// / vweightSum);
+			//r * 76 + g * 150 + b * 29
+			//Pixel h = Pixel(hr, hg, hb);
+			//Pixel v = Pixel(vr, vg, vb);
+			float hPixelLuminance = ((76.0f / 255.0)*hPixelsr[i*height + j] + (150.0f / 255.0f)*hPixelsg[i*height + j] + (29.0f / 255.0f)*hPixelsb[i*height + j]);
+			float vPixelLuminance = ((76.0f / 255.0)*vPixelsr[i*height + j] + (150.0f / 255.0f)*vPixelsg[i*height + j] + (29.0f / 255.0f)*vPixelsb[i*height + j]);
+			float gradient = sqrtf((pow(abs(hPixelLuminance), 2)) + (pow(abs(vPixelLuminance), 2)));
+			//float gradient = sqrt((h.Luminance() * h.Luminance()) + (v.Luminance() + v.Luminance()));
+			//fprintf(stderr, "%.6f %.6f %.6f\n", hPixelsr[i*height + j], hPixelsg[i*height + j], hPixelsb[i*height + j]);
+			//fprintf(stderr, "%.6f\n", gradient);
+			//	fprintf(stderr, "%.6f %.6f %.6f %.6f\n", hr, hg, hb, hweightSum);
+			//float gradient = sqrtf((hPixels[i*width + j].Luminance() * hPixels[i*width + j].Luminance()) + (vPixels[i*width + j].Luminance() * vPixels[i*width + j].Luminance()));
+			if (gradient >= threshold)
+				pixels[i*height + j].SetClamp(255,255,255);
+			else{
+				pixels[i*height + j].SetClamp(0, 0, 0);
+			}
+		}
+	}
 }
 
 
