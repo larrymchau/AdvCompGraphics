@@ -1,17 +1,56 @@
-﻿Build started 4/6/2015 9:54:01 PM.
-     1>Project "C:\Users\Larebear\Desktop\CSE 190\AdvCompGraphics\image.vcxproj" on node 2 (Build target(s)).
+﻿Build started 4/24/2015 6:47:26 PM.
+     1>Project "C:\Users\Larry\Desktop\CSE 190\AdvCompGraphics\image.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /Gy- /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug\\" /Fd".\Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\image.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /Gy- /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug\\" /Fd".\Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\image.cpp
          image.cpp
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(165): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(219): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(220): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(221): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(224): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(225): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(226): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(228): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(229): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(230): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(233): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(234): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(235): warning C4244: '+=' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(267): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(268): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(276): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(277): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(278): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(314): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(315): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(316): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(391): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(392): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(522): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(523): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(533): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(534): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(604): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(605): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(653): warning C4244: 'argument' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(656): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(657): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(670): warning C4244: 'argument' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(692): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(693): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(743): warning C4244: 'argument' : conversion from 'double' to 'Component', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(749): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(750): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\larry\desktop\cse 190\advcompgraphics\source\image.cpp(781): warning C4244: 'argument' : conversion from 'double' to 'Component', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"./Debug/image.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:".\Debug\image.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Debug\image.lib" /MACHINE:X86 /SAFESEH:NO .\Debug\bmp.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"./Debug/image.exe" /INCREMENTAL /NOLOGO odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:".\Debug\image.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Debug\image.lib" /MACHINE:X86 /SAFESEH:NO .\Debug\bmp.obj
          .\Debug\image.obj
          .\Debug\main.obj
          .\Debug\pixel.obj
          .\Debug\vector.obj
-         image.vcxproj -> C:\Users\Larebear\Desktop\CSE 190\AdvCompGraphics\.\Debug\image.exe
-     1>Done Building Project "C:\Users\Larebear\Desktop\CSE 190\AdvCompGraphics\image.vcxproj" (Build target(s)).
+         image.vcxproj -> C:\Users\Larry\Desktop\CSE 190\AdvCompGraphics\.\Debug\image.exe
+     1>Done Building Project "C:\Users\Larry\Desktop\CSE 190\AdvCompGraphics\image.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.48
+Time Elapsed 00:00:01.30

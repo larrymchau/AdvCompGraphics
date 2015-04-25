@@ -125,9 +125,6 @@ public:
     // Converts and image to nbits per channel using random dither.
     void RandomDither(int nbits);
 
-    // Helper function to implement convolution 
-    void Convolve(int *filter, int n, int normalization, int absval = 0) ;
-
     // Blurs an image with an n x n Gaussian filter.
     void Blur(int n);
 
@@ -165,7 +162,12 @@ public:
     void SetSamplingMethod(int method);
 
     // Sample image using current sampling method.
-    Pixel Sample(double u, double v, double sx, double sy);
+    Pixel Sample(double u, double v, double sx, double sy, bool shift, int pass = 0);
+
+	Pixel ConvolveHat(double magnifyX, double magnifyY, double u, double v, double sx, double sy, bool shift);
+	Pixel ConvolveMitchell(double magnifyX, double magnifyY, double u, double v, double sx, double sy, bool shift, int pass);
+	double Mitchell(double x);
+	double Barlett(double x);
 };
 
 // Composites the bottom and top images into the result image.
